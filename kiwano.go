@@ -5,6 +5,8 @@ import (
 	"runtime"
 	"time"
 
+	"kiwanoengine.com/kiwano/render"
+
 	"github.com/go-gl/gl/v3.3-core/gl"
 	"github.com/go-gl/glfw/v3.2/glfw"
 	"kiwanoengine.com/kiwano/core"
@@ -68,8 +70,8 @@ func Run() {
 
 // Destroy clean up engine resources
 func Destroy() {
+	render.DeleteAllShaders()
 	Window.Destroy()
-
 	glfw.Terminate()
 }
 
