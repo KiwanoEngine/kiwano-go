@@ -17,3 +17,7 @@ func ColorRGBA(r, g, b, a float32) Color {
 		Alpha: a,
 	}
 }
+
+func (c *Color) ToVec4() (float32, float32, float32, float32) {
+	return c.R, c.G, c.B, c.Alpha
+}

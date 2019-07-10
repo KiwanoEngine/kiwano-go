@@ -18,9 +18,8 @@ const (
 
 // Global variables
 var (
-	Window          *core.Window
-	CurrentScene    core.Scene
-	BackgroundColor core.Color
+	Window       *core.Window
+	CurrentScene core.Scene
 )
 
 func init() {
@@ -39,8 +38,6 @@ func Init(option *core.Option) error {
 	version := gl.GoStr(gl.GetString(gl.VERSION))
 	log.Println("OpenGL version", version)
 
-	BackgroundColor = option.BackgroundColor
-
 	Window.GLFWWindow.Show()
 	return nil
 }
@@ -52,7 +49,6 @@ func Run() {
 
 	for !Window.GLFWWindow.ShouldClose() {
 		// render
-		gl.ClearColor(BackgroundColor.R, BackgroundColor.G, BackgroundColor.B, BackgroundColor.Alpha)
 		gl.Clear(gl.COLOR_BUFFER_BIT)
 
 		now = time.Now()
@@ -87,9 +83,4 @@ func EnterScene(scene core.Scene) {
 	if CurrentScene != nil {
 		CurrentScene.OnEnter()
 	}
-}
-
-// SetBackgroundColor ...
-func SetBackgroundColor(c core.Color) {
-	BackgroundColor = c
 }

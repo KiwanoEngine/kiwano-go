@@ -6,13 +6,13 @@ import (
 )
 
 type Option struct {
-	Width, Height   int
-	Title           string
-	BackgroundColor Color
-	NoTitleBar      bool
-	Fullscreen      bool
-	Resizable       bool
-	Vsync           bool
+	Width, Height int
+	Title         string
+	ClearColor    Color
+	NoTitleBar    bool
+	Fullscreen    bool
+	Resizable     bool
+	Vsync         bool
 }
 
 type Window struct {
@@ -86,6 +86,8 @@ func NewWindow(option *Option) (*Window, error) {
 	if err := gl.Init(); err != nil {
 		return nil, err
 	}
+
+	gl.ClearColor(option.ClearColor.ToVec4())
 
 	window.GLFWWindow = w
 	return window, nil
