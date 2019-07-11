@@ -9,7 +9,6 @@ import (
 
 	"github.com/go-gl/gl/v3.3-core/gl"
 	"github.com/go-gl/glfw/v3.2/glfw"
-	"kiwanoengine.com/kiwano/core"
 )
 
 // Environment variables
@@ -20,8 +19,8 @@ const (
 
 // Global variables
 var (
-	Window       *core.Window
-	CurrentScene core.Scene
+	MainWindow   *Window
+	CurrentScene Scene
 )
 
 func init() {
@@ -29,10 +28,10 @@ func init() {
 }
 
 // Init will initialize kiwano engine
-func Init(option *core.Option) error {
+func Init(option *Option) error {
 	var err error
 	// Create window
-	Window, err = core.NewWindow(option)
+	MainWindow, err = NewWindow(option)
 	if err != nil {
 		return err
 	}
@@ -40,7 +39,7 @@ func Init(option *core.Option) error {
 	version := gl.GoStr(gl.GetString(gl.VERSION))
 	log.Println("OpenGL version", version)
 
-	Window.GLFWWindow.Show()
+	MainWindow.GLFWWindow.Show()
 	return nil
 }
 
@@ -49,7 +48,7 @@ func Run() {
 	now := time.Now()
 	last := now
 
-	for !Window.GLFWWindow.ShouldClose() {
+	for !MainWindow.GLFWWindow.ShouldClose() {
 		// render
 		gl.Clear(gl.COLOR_BUFFER_BIT)
 
@@ -60,7 +59,7 @@ func Run() {
 		last = now
 
 		// swap buffer
-		Window.GLFWWindow.SwapBuffers()
+		MainWindow.GLFWWindow.SwapBuffers()
 		glfw.PollEvents()
 	}
 
@@ -71,12 +70,12 @@ func Run() {
 // Destroy clean up engine resources
 func Destroy() {
 	render.DeleteAllShaders()
-	Window.Destroy()
+	MainWindow.Destroy()
 	glfw.Terminate()
 }
 
 // EnterScene exits current scene and enters a new scene
-func EnterScene(scene core.Scene) {
+func EnterScene(scene Scene) {
 	if CurrentScene != nil {
 		CurrentScene.OnExit()
 	}

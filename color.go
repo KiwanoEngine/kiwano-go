@@ -1,4 +1,4 @@
-package core
+package kiwano
 
 type Color struct {
 	R, G, B float32

@@ -40,8 +40,10 @@ func CreateShader(vertexShaderSource, fragmentShaderSource string) (shader *Shad
 
 // DeleteAllShaders ...
 func DeleteAllShaders() {
-	for _, s := range shaders {
-		s.Delete()
+	if shaders != nil {
+		for _, s := range shaders {
+			s.Delete()
+		}
 	}
 }
 
