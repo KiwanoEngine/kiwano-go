@@ -38,11 +38,11 @@ func CreateShader(vertexShaderSource, fragmentShaderSource string) (shader *Shad
 	return
 }
 
-// DeleteAllShaders ...
-func DeleteAllShaders() {
+// DestroyAllShaders ...
+func DestroyAllShaders() {
 	if shaders != nil {
 		for _, s := range shaders {
-			s.Delete()
+			s.Destroy()
 		}
 	}
 }
@@ -64,8 +64,8 @@ func (s *Shader) Use() {
 	gl.UseProgram(s.ID)
 }
 
-// Delete delete the shader
-func (s *Shader) Delete() {
+// Destroy delete the shader
+func (s *Shader) Destroy() {
 	gl.DeleteProgram(s.ID)
 }
 

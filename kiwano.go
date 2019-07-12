@@ -69,7 +69,7 @@ func Run() {
 
 // Destroy clean up engine resources
 func Destroy() {
-	render.DeleteAllShaders()
+	render.DestroyAllShaders()
 	MainWindow.Destroy()
 	glfw.Terminate()
 }
