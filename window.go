@@ -1,6 +1,9 @@
 package kiwano
 
 import (
+	"fmt"
+	"runtime"
+
 	"github.com/go-gl/glfw/v3.2/glfw"
 
 	"kiwanoengine.com/kiwano/external/gl"
@@ -22,7 +25,6 @@ type Window struct {
 }
 
 func NewWindow(option *Option) (*Window, error) {
-
 	window := &Window{
 		Option: *option,
 	}
@@ -36,6 +38,10 @@ func NewWindow(option *Option) (*Window, error) {
 	glfw.WindowHint(glfw.ContextVersionMinor, 3)
 	glfw.WindowHint(glfw.OpenGLProfile, glfw.OpenGLCoreProfile)
 	glfw.WindowHint(glfw.Visible, glfw.False)
+
+	if runtime.GOOS == "darwin" {
+		glfw.WindowHint(glfw.OpenGLForwardCompatible, glfw.True)
+	}
 
 	if option.NoTitleBar {
 		glfw.WindowHint(glfw.Decorated, glfw.False)
@@ -97,4 +103,5 @@ func NewWindow(option *Option) (*Window, error) {
 func (w *Window) onFramebufferSizeCallback(win *glfw.Window, width int, height int) {
 	w.Width, w.Height = width, height
 	gl.Viewport(0, 0, int32(width), int32(height))
+	fmt.Printf("window resize to (%d, %d)\n", width, height)
 }
